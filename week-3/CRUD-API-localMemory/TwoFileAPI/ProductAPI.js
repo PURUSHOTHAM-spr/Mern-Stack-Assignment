@@ -42,6 +42,8 @@ productApp.put('/products/:id', (req, res) => {
     let reqProduct = Number(req.params.id);
     let reqProductIdx = products.findIndex(prods => prods.id === reqProduct);
     let updatedProd = products.splice(reqProductIdx, 1, req.body);
+// splice() is an array method used to add, remove, or replace elements in an array by modifying the original array.
+    
     res.json({ message: "Product edited", payload: products });
 })
 // delete the object from the array
