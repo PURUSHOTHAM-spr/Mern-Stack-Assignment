@@ -1,8 +1,8 @@
-###It reads the user data
+###
 GET http://localhost:3000/user-api/users
 
 
-### Read users by id
+### Read users
 GET http://localhost:3000/user-api/users/697dba5f4ae3ce601670dcf5
 
 ### create users
