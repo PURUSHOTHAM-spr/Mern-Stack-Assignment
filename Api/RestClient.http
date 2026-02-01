@@ -1,0 +1,66 @@
+GET http://localhost:3000/user-api/users
+
+###
+POST http://localhost:3000/user-api/users
+Content-Type: application/json
+
+{
+    "id":100,
+    "name":"ravi",
+    "age":25
+}
+
+###
+PUT http://localhost:3000/user-api/users
+Content-Type:application/json
+
+{
+    "id":100,
+    "name":"ravi",
+    "age":51
+}
+
+###Read a user by id
+GET http://localhost:3000/user-api/users/100
+
+###
+DELETE  http://localhost:3000/user-api/users/100
+
+
+
+
+###read all prods
+GET http://localhost:3000/product-api/products
+
+###read prods by id
+GET http://localhost:3000/product-api/products-id/100
+
+###read prods by name
+GET http://localhost:3000/product-api/products-name/glass
+
+###push new prods
+POST http://localhost:3000/product-api/products
+Content-Type: application/json
+
+{
+    "productId":100,
+    "name":"glass",
+    "price":1200,
+    "brand":"LG"
+}
+
+
+###edit prods
+PUT http://localhost:3000/product-api/products/100
+Content-Type:application/json
+
+{
+    "productId":100,
+    "name":"TV",
+    "price":10200,
+    "brand":"LG"
+}
+
+
+###delete prods
+DELETE  http://localhost:3000/product-api/products/100

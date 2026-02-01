@@ -1,0 +1,11 @@
+HTTP request types:(CRUD operations)
+GET: To read resources
+POST: To create resources
+PUT: To update resources
+DELETE: To delete resources
+
+
+http://localhost:3000/users
+
+
+//create user api
