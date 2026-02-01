@@ -1,6 +1,6 @@
 GET http://localhost:3000/user-api/users
 
-###
+### create the users
 POST http://localhost:3000/user-api/users
 Content-Type: application/json
 
