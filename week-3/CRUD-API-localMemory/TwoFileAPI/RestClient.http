@@ -48,7 +48,7 @@ GET http://localhost:3000/product-api/products-id/100
 GET http://localhost:3000/product-api/products-name/phone
 
 
-###edit prods
+###editing
 PUT http://localhost:3000/product-api/products/100
 Content-Type:application/json
 
