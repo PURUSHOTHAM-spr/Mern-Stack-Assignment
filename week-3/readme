@@ -2,9 +2,78 @@
 2.npm install express
 3.npm install mongoose
 About this task:
-local memory:
-we store in local storage
-useing mongoDB compass:
-This project is a backend REST API built using Node.js, Express.js, and MongoDB (Mongoose).
-It demonstrates CRUD (Create, Read, Update, Delete)
-operations for Users and Products with proper project structure and routing.
+Week-3: CRUD APIs using Local Memory & MongoDB
+
+This task focuses on building CRUD (Create, Read, Update, Delete) APIs using backend technologies.
+The implementation is done using two different approaches to understand how data handling works with and
+without a database.
+
+1. Local Memory CRUD
+-------------------
+In this approach, data is stored in local memory using JavaScript arrays.
+No database is used, and the data exists only while the server is running.
+
+Purpose:
+- To understand Express.js routing
+- To learn HTTP methods (GET, POST, PUT, DELETE)
+- To practice handling request body and parameters
+- To focus on backend logic without database dependency
+
+Limitations:
+- Data is temporary
+- Data is lost when the server restarts
+- Not suitable for production use
+
+------------------------------------------------
+
+2. MongoDB CRUD (Using Mongoose)
+--------------------------------
+In this approach, data is stored in a MongoDB database.
+Mongoose is used as an ODM (Object Data Modeling) library to interact with MongoDB.
+
+Purpose:
+- To understand database integration
+- To define schemas and models
+- To apply validation rules
+- To perform persistent CRUD operations
+- To simulate real-world backend applications
+
+MongoDB Compass can be used to visually manage and verify the stored data.
+
+------------------------------------------------
+
+Technologies Used
+-----------------
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- REST Client
+
+
+Installation Steps
+------------------
+1. npm init -y
+2. npm install express
+3. npm install mongoose
+
+------------------------------------------------
+
+What This Project Demonstrates
+------------------------------
+- RESTful API design principles
+- Separation of routes and models
+- Difference between local memory storage and database storage
+- Backend folder structuring
+- Error handling and validation
+- Real-world CRUD workflow
+
+
+Learning Outcome
+----------------
+After completing this task, you will understand:
+- How backend APIs work
+- How data flows between client and server
+- How MongoDB stores and retrieves data
+- How CRUD operations form the foundation of backend systems
+- How a MERN stack backend project is structured
