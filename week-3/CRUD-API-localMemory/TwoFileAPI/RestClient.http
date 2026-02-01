@@ -6,8 +6,8 @@ Content-Type: application/json
 
 {
     "id":100,
-    "name":"ravi",
-    "age":25
+    "name":"spr",
+    "age":21
 }
 
 ###
@@ -16,38 +16,36 @@ Content-Type:application/json
 
 {
     "id":100,
-    "name":"ravi",
-    "age":51
+    "name":"spr",
+    "age":30
 }
 
-###Read a user by id
+###
 GET http://localhost:3000/user-api/users/100
 
 ###
 DELETE  http://localhost:3000/user-api/users/100
 
 
-
-
-###read all prods
+###products API
 GET http://localhost:3000/product-api/products
 
-###read prods by id
-GET http://localhost:3000/product-api/products-id/100
-
-###read prods by name
-GET http://localhost:3000/product-api/products-name/glass
-
-###push new prods
+###
 POST http://localhost:3000/product-api/products
 Content-Type: application/json
 
 {
     "productId":100,
-    "name":"glass",
+    "name":"phone",
     "price":1200,
-    "brand":"LG"
+    "brand":"nokia"
 }
+
+### products by id
+GET http://localhost:3000/product-api/products-id/100
+
+###products by name
+GET http://localhost:3000/product-api/products-name/phone
 
 
 ###edit prods
@@ -55,10 +53,10 @@ PUT http://localhost:3000/product-api/products/100
 Content-Type:application/json
 
 {
-    "productId":100,
-    "name":"TV",
-    "price":10200,
-    "brand":"LG"
+    "productId":101,
+    "name":"AC",
+    "price":50000,
+    "brand":"haier"
 }
 
 
