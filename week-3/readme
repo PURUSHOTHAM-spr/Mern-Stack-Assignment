@@ -2,6 +2,9 @@
 2.npm install express
 3.npm install mongoose
 About this task:
+local memory:
+we store in local storage
+useing mongoDB compass:
 This project is a backend REST API built using Node.js, Express.js, and MongoDB (Mongoose).
 It demonstrates CRUD (Create, Read, Update, Delete)
 operations for Users and Products with proper project structure and routing.
