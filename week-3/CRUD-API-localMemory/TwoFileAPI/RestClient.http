@@ -23,7 +23,7 @@ Content-Type:application/json
 ###
 GET http://localhost:3000/user-api/users/100
 
-###
+### deleting the users by id
 DELETE  http://localhost:3000/user-api/users/100
 
 
@@ -60,5 +60,5 @@ Content-Type:application/json
 }
 
 
-###delete prods
+###delete products
 DELETE  http://localhost:3000/product-api/products/100
