@@ -10,6 +10,8 @@ app.use(exp.json());
 const connection = async () => {
     try {
 let database= await connect("mongodb://127.0.0.1:27017/Anuragdb");
+//await is used to pause execution of an async function until a Promise settles (resolves or rejects).
+
         console.log("connection success");
         // Assign port 
         app.listen(3000, () => console.log("Sever is listening on port 3000"));
