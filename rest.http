@@ -1,0 +1,188 @@
+
+### USER REGISTRATION
+
+POST http://localhost:4000/user-api/users
+Content-Type: application/json
+
+{
+  "firstname": "anurag",
+  "lastname": "reddy",
+  "email": "anurag@email.com",
+  "password": "author@123",
+  "profileImageUrl": "http://example.com/avatar/user.png"
+}
+
+### USER AUTHENTICATION (LOGIN)
+
+POST http://localhost:4000/user-api/authenticate
+Content-Type: application/json
+
+{
+  "email": "anurag@email.com",
+  "password": "author@123",
+  "role": "USER"
+}
+###new user 2 creating
+POST http://localhost:4000/user-api/users
+Content-Type: application/json
+
+{
+  "firstname": "purushotham",
+  "lastname": "reddy",
+  "email": "SPR@email.com",
+  "password": "user@123",
+  "profileImageUrl": "http://example.com/avatar/user.png"
+}
+
+### USER AUTHENTICATION (LOGIN)
+
+POST http://localhost:4000/user-api/authenticate
+Content-Type: application/json
+
+{
+  "email": "SPR@email.com",
+  "password": "user@123",
+  "role": "USER"
+}
+
+
+###all users
+GET http://localhost:4000/user-api/users
+###get articles by author id
+GET http://localhost:4000/user-api/articles/author/69896f3ae6cc1dc714dfc5d0
+
+###comments by userID
+POST http://localhost:4000/user-api/users/comments
+Content-Type: application/json
+
+{
+  "articleId": "69897c57cd1ce69831ca7bba",
+  "userId": "69899bcfceaa6b354900e337",
+  "comment": "This is a great article"
+}
+
+### AUTHOR REGISTRATION (if enabled)
+
+POST http://localhost:4000/author-api/users
+Content-Type: application/json
+
+{
+  "firstname": "rahul",
+  "lastname": "kumar",
+  "email": "rahul@author.com",
+  "password": "author@123",
+  "profileImageUrl": "http://example.com/avatar/author.png"
+}
+
+
+### AUTHOR AUTHENTICATION
+POST http://localhost:4000/author-api/authenticate
+Content-Type: application/json
+
+{
+  "email": "rahul@author.com",
+  "password": "author@123",
+  "role": "AUTHOR"
+}
+
+###admin authentication
+
+POST http://localhost:4000/admin-api/authenticate
+Content-Type: application/json
+
+{
+  "email": "admin@email.com",
+  "password": "admin@123",
+  "role": "ADMIN"
+}
+
+###create article
+POST http://localhost:4000/author-api/articles
+Content-Type: application/json
+
+{
+   "author": "69896f3ae6cc1dc714dfc5d0",
+  "title": "reseaching Ai",
+  "category": "Backend",
+  "content": "This article explains how to research on ais and cross the limitations."
+}
+###get articles based on author id
+GET http://localhost:4000/author-api/articles/author/69896f3ae6cc1dc714dfc5d0
+
+###edit article based on article id
+PUT http://localhost:4000/author-api/articles/69897c57cd1ce69831ca7bba
+Content-Type: application/json
+
+{
+  "article":"69897c57cd1ce69831ca7bba",
+  "title": "updating example",
+  "category": "vechile",
+  "content": "volvo car is strong"  
+  
+}
+
+### delete article based on article id
+DELETE http://localhost:4000/author-api/articles/69897b3a8a8875cd84fea51b
+
+
+
+
+### ----common api--
+### login
+POST http://localhost:4000/common-api/authenticate
+Content-Type: application/json
+
+{
+  "email": "SPR@email.com",
+  "password": "user@123"
+ 
+}
+
+###
+POST http://localhost:4000/common-api/authenticate
+Content-Type: application/json
+
+{
+  "email": "rahul@author.com",
+  "password": "author@123"
+
+}
+
+###admin
+POST http://localhost:4000/common-api/authenticate
+Content-Type: application/json
+
+{
+  "email": "admin@mail.com",
+  "password": "admin123"
+}
+
+###admin reading articles based author id
+GET http://localhost:4000/admin-api/articles/author/69896f3ae6cc1dc714dfc5d0
+
+###blocking users
+PUT http://localhost:4000/admin-api/users/block/69896f29e6cc1dc714dfc5cb
+
+### login demo block checking
+POST http://localhost:4000/common-api/authenticate
+Content-Type: application/json
+
+{
+  "email": "anurag@email.com",
+  "password": "author@123"
+ 
+}
+
+###unblocking the user
+PUT http://localhost:4000/admin-api/users/unblock/69896f29e6cc1dc714dfc5cb
+
+###password changing demo of an user currently logged in
+PUT http://localhost:4000/common-api/change-password
+Content-Type: application/json
+
+{
+  "currentPassword":"author@123",
+  "newPassword":"modifypass"
+}
+
+
