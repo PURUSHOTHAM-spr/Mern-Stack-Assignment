@@ -1,0 +1,84 @@
+###It reads the user data
+GET http://localhost:3000/user-api/users
+
+
+### Read users by id
+GET http://localhost:3000/user-api/users/
+
+### create users
+POST http://localhost:3000/user-api/users
+Content-Type: application/json
+
+{
+    "username":"spredd",
+    "password":"123456",
+    "age":21
+}
+
+###
+POST http://localhost:3000/user-api/users
+Content-Type: application/json
+
+{
+    "username":"revan",
+    "password":"837480",
+    "age":21
+}
+
+###
+POST http://localhost:3000/user-api/auth
+Content-Type: application/json
+
+{
+    "username":"spredd",
+    "password":"123456"
+}
+
+###request for protected route
+GET http://localhost:3000/user-api/test
+
+###update the  user
+PUT http://localhost:3000/user-api/users/698030b233ce31b4b636a123
+Content-Type: application/json
+
+{
+    "username":"raju",
+    "password":"abcde",
+    "age": 22
+}
+
+
+### delete a user 
+DELETE http://localhost:3000/user-api/users/698041344ee34a69d75ce5f5
+
+
+
+#####Products
+###It reads product data
+GET http://localhost:3000/product-api/products
+
+
+# ### Read products by id
+# GET http://localhost:3000/product-api/products/697dce37abd0ba2ad188973a
+
+
+
+### create products
+POST http://localhost:3000/product-api/products
+Content-Type: application/json
+
+{
+    "name":"laptop",
+    "brand":"macbook",
+    "price":80000,
+    "pid":1
+}
+
+
+###update the existing product
+PUT http://localhost:3000/product-api/products/69801b684eb57f7e341a9dd6
+Content-Type: application/json
+
+{
+    "price":75000
+}

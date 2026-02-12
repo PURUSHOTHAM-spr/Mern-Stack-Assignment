@@ -1,0 +1,90 @@
+
+# USERS API
+
+### Get all users (initial)
+GET http://localhost:3000/users
+
+
+### Create user
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "id": 100,
+  "name": "spr",
+  "age": 20
+}
+
+
+### Get user by id
+GET http://localhost:3000/users/100
+
+
+### Update user
+PUT http://localhost:3000/users/100
+Content-Type: application/json
+
+{
+  "name": "faruk",
+  "age": 30
+}
+
+
+### Get updated user
+GET http://localhost:3000/users/100
+
+
+### Delete user
+DELETE http://localhost:3000/users/100
+
+
+### Get users after delete
+GET http://localhost:3000/users
+
+
+
+
+# PRODUCTS API
+
+
+### Get all products (initial)
+GET http://localhost:3000/products
+
+
+### Create product
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+  "product-id": 160926,
+  "product-name": "spr",
+  "price": 20,
+  "brand": "tenali"
+}
+
+
+### Get product by id
+GET http://localhost:3000/products/160926
+
+
+### Update product
+PUT http://localhost:3000/products/160926
+Content-Type: application/json
+
+{
+  "product-name": "faruk",
+  "price": 30,
+  "brand": "tenali"
+}
+
+
+### Get updated product
+GET http://localhost:3000/products/160926
+
+
+### Delete product
+DELETE http://localhost:3000/products/160926
+
+
+### Get products after delete
+GET http://localhost:3000/products

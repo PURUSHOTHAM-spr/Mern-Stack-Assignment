@@ -1,0 +1,6 @@
+HTTP request types:(CRUD operations)
+GET: To read resources
+POST: To create resources
+PUT: To update resources
+DELETE: To delete resources
+
