@@ -1,0 +1,14 @@
+###Backend development
+create git repo
+1:git init
+2.add .gitignore file
+3.create . env file for environment file and read data from . env with "dotenv" module 
+4.generate package json
+5.create express app
+6.connect to db
+7.add middleware
+8.design schema and create models
+9.create rest api
+#registration and login
+10.registration and login in common for user and author
+
