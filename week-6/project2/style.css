@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.profile{
+    
+    margin: auto;
+    margin-top: 150px;
+    border: 1px solid black;
+    background-color:white;
+    text-align: center;
+    width: 300px;
+    padding: 30px;
+    padding-bottom: 150px;
+    border-radius: 10px;
+}
+
+body{
+    background-color: gray;
+}
+img{
+    width:50%;
+    border-radius:50%;
+   
+}
+h4{
+    background-color: blue;
+    border-radius: 5px;
+    width: 100px;
+    margin: auto;
+    color: white;
+    
+}
+.child{
+position: relative;
+right:50px;
+
+bottom: 10px;
+width: 100px;
+
+}

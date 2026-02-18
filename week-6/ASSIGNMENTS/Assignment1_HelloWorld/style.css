@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/*  TOP SECTION  */
+
+.upper{
+    background-color: #e9ecef;
+    padding: 100px 10%;
+}
+
+.upper h1{
+    font-size: 60px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.upper p{
+    font-size: 18px;
+    color: #555;
+    max-width: 700px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.upper button{
+    background-color: #0d6efd;
+    padding: 12px 25px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.upper button:hover{
+    background-color: #0b5ed7;
+}
+
+/* ================= BOTTOM SECTION ================= */
+
+.bottom{
+    padding: 60px 10%;
+}
+
+.bottom section{
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.card{
+    width: 32%;
+}
+
+.card h1{
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.card p{
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.card button{
+    background-color: #6c757d;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.card button:hover{
+    background-color: #5a6268;
+}
+
+/*  RESPONSIVE  */
+
+@media (max-width: 768px){
+    .bottom section{
+        flex-direction: column;
+    }
+
+    .card{
+        width: 100%;
+    }
+
+    .upper h1{
+        font-size: 40px;
+    }
+}

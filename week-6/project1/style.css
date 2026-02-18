@@ -1,0 +1,39 @@
+/*h1{
+    width: 600px;
+    height: 100px;
+  
+}
+a{
+    display: block;
+    width: 600px;
+    height: 300px;
+    there is no change io the inline elements to change 
+    the display property to block it changes
+}
+    every element of html is box every box contains border by default
+    the space between two borders is padding
+    margin is space external to element
+    padding is space internal to element
+   " * "-> universal selector
+
+*/
+h1{
+    text-align: center;
+    /* padding: 50px;
+    padding-left: 10px;
+    padding-right: 50px; 
+    insteads of this many see bottom one*/
+    padding: 100px 50px 40px 40px;
+    margin: 50px;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+img{
+    display: block;
+    margin: auto;
+}
+
+*{
+    margin:0;
+    padding: 0;
+}

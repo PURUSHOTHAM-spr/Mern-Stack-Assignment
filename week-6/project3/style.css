@@ -1,0 +1,48 @@
+/* static,relative,absolute,fixed,sticky
+relative-relative to ioyts current position
+relative applied parent level
+absolute children level*/
+
+/* h1{
+    position: relative;
+    top: 300px;
+    left: 500px;
+
+} */
+ *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+ }
+.parent{
+    width: 500px;
+    height: 500px;
+    margin: auto;
+    margin-top: 100px;
+    border:1px solid black;
+    
+}
+.child{
+
+    height: 100px;
+    width: 100px;
+}
+.child1{
+    display: block;
+    position: fixed;
+    background-color: aqua;
+    height: 100px;
+    width: 100px;
+    right: 100;
+
+}
+.child2{
+position: relative;
+background-color: burlywood;
+left: 200px;
+
+}
+.child3{
+position:sticky;
+background-color: aquamarine;
+}

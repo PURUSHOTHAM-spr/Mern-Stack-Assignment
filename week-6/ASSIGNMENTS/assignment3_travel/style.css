@@ -1,0 +1,219 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/*  First page */
+
+.firstpage{
+    position: relative;
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 10%;
+}
+
+.firstpage img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.intro-content{
+    max-width: 600px;
+}
+
+.intro-content h1{
+    color: white;
+    font-size: 44px;
+    line-height: 1.3;
+    font-weight: bold;
+}
+
+.discover-btn{
+    margin-top: 25px;
+    padding: 14px 38px;
+    font-size: 16px;
+    border: none;
+    background-color: #ff8c00;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+
+/*  second page */
+
+.secondpage{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px 10%;
+    background-color: #ffffff;
+}
+
+.secondpage .content{
+    width: 45%;
+}
+
+.secondpage .content h1{
+    font-size: 32px;
+    color: #1e3a5f;
+    margin-bottom: 20px;
+}
+
+.secondpage .content p{
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555;
+}
+
+.secondpage img{
+    width: 500px;
+    border-radius: 4px;
+}
+
+/*  Third page */
+
+.thirdpage{
+    padding: 100px 10%;
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+.section-title{
+    font-size: 32px;
+    color: #1e3a5f;
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+.tourism-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.tour-card{
+    background-color: #eaeef3;
+    padding: 30px 20px;
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+.tour-card img{
+    width: 80px;
+    margin-bottom: 15px;
+}
+
+.tour-card h3{
+    font-size: 18px;
+    color: #ff8c00;
+}
+
+.tour-card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/*  Fourth page */
+
+.forthpage{
+    padding: 100px 10%;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.forthpage h1{
+    margin-bottom: 40px;
+    font-size: 28px;
+}
+
+.forthpage ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.forthpage ul li a{
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    transition: 0.3s;
+}
+
+
+/*  Responsive  */
+
+@media (max-width: 992px){
+
+    .tourism-container{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 768px){
+
+    /* intro */
+
+    .firstpage{
+        height: 70vh;
+        padding-left: 5%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .intro-content{
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .intro-content h1{
+        font-size: 26px;
+    }
+
+    .discover-btn{
+        width: auto;
+        padding: 10px 25px;
+        font-size: 14px;
+    }
+
+    /* Second Page */
+
+    .secondpage{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .secondpage .content{
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .secondpage img{
+        width: 100%;
+    }
+
+    /* Third Page */
+
+    .tourism-container{
+        grid-template-columns: 1fr;
+    }
+
+    /* Fourth Page */
+
+    .forthpage ul{
+        flex-direction: column;
+        gap: 20px;
+    }
+}

@@ -1,0 +1,43 @@
+body{
+    background-color:cadetblue;
+}
+.parent{
+    max-width: 700px;
+    height: 700px;
+    margin: auto;
+    margin-top: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content:space-around;
+    /* align-items: center;  */
+    border:1px solid black;
+
+    
+}
+.child{
+
+    height: 100px;
+    width: 100px;
+}
+.child1{
+ 
+    background-color:orange;
+    /* flex-grow: 1; */
+ 
+
+}
+.child2{
+
+background-color: whitesmoke;
+    /* flex-grow: 2; */
+
+
+}
+.child3{
+
+background-color:green;
+    /* flex-grow: 1; */
+    /* flex-shrink: 0; */
+
+}

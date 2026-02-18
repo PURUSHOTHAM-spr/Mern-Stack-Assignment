@@ -1,0 +1,56 @@
+/* Default → below 500px */
+body {
+    background-color: chocolate;
+}
+
+.img1 {
+    display: block;
+}
+
+.img3,.img2 {
+    display: none;
+}
+/* 500px to 700px */
+@media screen and (min-width: 500px) and (max-width: 700px) {
+    body {
+        background-color: orange;
+    }
+
+    .img1 {
+        display: none;
+    }
+
+    .img2,.img1 {
+        display: block;
+        
+    }
+}
+
+/* Above 701px */
+@media screen and (min-width: 701px) {
+    body {
+        background-color: chartreuse;
+    }
+ 
+    .img1,
+    .img2 {
+        display: block;
+        
+    } 
+
+    .img3 {
+        display: block;
+
+    }
+}
+/* Print */
+@media print {
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    img {
+        display: none;
+    }
+}
