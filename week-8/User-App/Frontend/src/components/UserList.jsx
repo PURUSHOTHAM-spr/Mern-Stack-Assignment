@@ -1,38 +1,46 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from 'react'
+import {useNavigate} from "react-router"
 
-function UserList() {
-  const [users, setUsers] = useState([]);
+const UsersList = () => {
 
-  useEffect(() => {
-    async function getUsers() {
-      try {
-        const res = await fetch("http://localhost:3000/user-api/users", {
-          method: "GET"
-        });
-
-        const data = await res.json();
-        setUsers(data);
-
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
+    let [users,setUsers] = useState([]);
+    const navigate = useNavigate();
+    const goToUser = (userObj) => {
+        navigate("/user",{state:{userObj:userObj}})
     }
 
-    getUsers();
-  }, []);
+    useEffect(()=>{
+        async function getUsers() {
+            let res = await fetch("http://localhost:3000/user-api/users")
+
+            if(res.status === 200){
+                let resObj = await res.json();
+
+                setUsers(resObj.payload);
+            }
+
+        }
+
+        getUsers();
+    },[])
 
   return (
-    <div>
-      <h1 className="text-5xl text-gray-300">List of Users</h1>
-
-      {users && users.usersList && users.usersList.map((user, index) => (
-        <div key={index}>
-          <p>{user.name}</p>
-          <p>{user.email}</p>
-        </div>
-      ))}
+    <div className='w-full'>
+      <h1 className='text-2xl bg-gray-400 font-bold'>Add new User</h1>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-5 gap-10'>
+        {
+            users.map((userObj)=>{
+                return (
+                    <div onClick={() => goToUser(userObj)} className='shadow-lg p-2 cursor-pointer ' key={userObj.email}>
+                        <h1 className=''>{userObj.email}</h1>
+                        <h1>{userObj.name}</h1>
+                    </div>
+                )
+            })
+        }
+      </div>
     </div>
-  );
+  )
 }
 
-export default UserList;
+export default UsersList

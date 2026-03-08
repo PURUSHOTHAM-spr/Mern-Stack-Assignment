@@ -28,7 +28,11 @@ result1=cart.filter(cartObj=>{
 })
 console.log(result1)
 //2. Use map() to create a new array with:  { name, totalPrice }
-result2=cart.map(cartObj=>({name:cartObj.name,totalPrice:cartObj.price*cartObj.quantity}))
+result2=cart.map(cartObj=>(
+  {
+    name:cartObj.name,
+    totalPrice:cartObj.price*cartObj.quantity
+  }))
 console.log(result2)
 //3. Use reduce() to calculate grand total cart value
 result3=cart.reduce((sum,cartObj)=>{
