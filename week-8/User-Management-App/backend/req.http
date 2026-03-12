@@ -1,0 +1,34 @@
+GET http://localhost:3000/user-api/users
+
+###crreating
+POST http://localhost:3000/user-api/users
+Content-Type: application/json
+
+{
+    "name":"reddy",
+    "email":"r@email.com",
+    "DOB":"2005-12-19",
+    "mobileNumber":9704378888
+    }
+
+### updating
+
+
+PUT http://localhost:3000/user-api/users/69a69047c5cf056e198a855a
+Content-Type: application/json
+
+{
+    "name":"reddy1",
+    "email":"redyy@email.com",
+    "DOB":"2005-12-19",
+    "mobileNumber":9704378888
+    }
+
+### deleting
+
+DELETE http://localhost:3000/user-api/users/69a69047c5cf056e198a855a
+
+
+### reactivating user from soft delete
+
+PATCH http://localhost:3000/user-api/users/69a69047c5cf056e198a855a
