@@ -1,7 +1,7 @@
 import exp from "express";
 import { register } from "../services/authService.js";
 import { ArticleModel } from "../Models/ArticleModel.js";
-import { checkAuthor } from "../middlewares/checkAuthor.js";
+//import { checkAuthor } from "../middlewares/checkAuthor.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
 
 export const authorRoute = exp.Router();
@@ -13,11 +13,11 @@ authorRoute.post("/users", async (req, res) => {
   //call register
   const newUserObj = await register({ ...userObj, role: "AUTHOR" });
   //send res
-  res.status(201).json({ message: "authroe created", payload: newUserObj });
+  res.status(201).json({ message: "author created", payload: newUserObj });
 });
 
 //Create article(protected route)
-authorRoute.post("/articles", verifyToken("AUTHOR"), async (req, res) => {
+authorRoute.post("/articles", verifyToken(["AUTHOR"]), async (req, res) => {
   //get article from req
   let article = req.body;
 
@@ -30,9 +30,9 @@ authorRoute.post("/articles", verifyToken("AUTHOR"), async (req, res) => {
 });
 
 //Read artiles of author(protected route)
-authorRoute.get("/articles/:authorId", verifyToken("AUTHOR"), async (req, res) => {
-  //get author id
-  let aid = req.params.authorId;
+authorRoute.get("/articles", verifyToken(["AUTHOR"]), async (req, res) => {
+  //get author id from token
+  let aid = req.user.userId;
 
   //read atricles by this author which are acticve
   let articles = await ArticleModel.find({ author: aid, isArticleActive: true }).populate("author", "firstName email");
@@ -41,7 +41,7 @@ authorRoute.get("/articles/:authorId", verifyToken("AUTHOR"), async (req, res) =
 });
 
 //edit article(protected route)
-authorRoute.put("/articles", verifyToken("AUTHOR"), async (req, res) => {
+authorRoute.put("/articles", verifyToken(["AUTHOR"]), async (req, res) => {
   //get modified article from req
   let { articleId, title, category, content, author } = req.body;
   //find article
@@ -63,7 +63,7 @@ authorRoute.put("/articles", verifyToken("AUTHOR"), async (req, res) => {
 });
 
 //delete(soft delete) article(Protected route)
-authorRoute.patch("/articles/:id/status", verifyToken("AUTHOR"), async (req, res) => {
+authorRoute.patch("/articles/:id/status", verifyToken(["AUTHOR"]), async (req, res) => {
   const { id } = req.params;
   const { isArticleActive } = req.body;
   // Find article

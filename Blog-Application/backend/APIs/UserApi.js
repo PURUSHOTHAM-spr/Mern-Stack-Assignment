@@ -16,15 +16,28 @@ userRoute.post("/users", async (req, res) => {
 });
 
 //Read all articles(protected route)
-userRoute.get("/articles", verifyToken("USER"), async (req, res) => {
+userRoute.get("/articles", verifyToken(["USER"]), async (req, res) => {
   //read articles of all authors which are active
   const articles = await ArticleModel.find({ isArticleActive: true });
   //send res
   res.status(200).json({ message: "all articles", payload: articles });
 });
 
+//Read single article by ID(protected route)
+userRoute.get("/articles/:id", verifyToken(["USER", "AUTHOR"]), async (req, res) => {
+  try {
+    const article = await ArticleModel.findOne({ _id: req.params.id, isArticleActive: true }).populate("author", "firstName email");
+    if (!article) {
+      return res.status(404).json({ message: "Article not found" });
+    }
+    res.status(200).json({ message: "article", payload: article });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 //Add comment to an article(protected route)
-userRoute.put("/articles", verifyToken("USER"), async (req, res) => {
+userRoute.put("/articles", verifyToken(["USER"]), async (req, res) => {
   //get comment obj from req
   const { user, articleId, comment } = req.body;
   //check user(req.user)

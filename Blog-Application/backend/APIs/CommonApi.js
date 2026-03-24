@@ -1,7 +1,8 @@
 import exp from "express";
 import { authenticate } from "../services/authService.js";
 import { UserTypeModel } from "../Models/UserModel.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
+import { verifyToken } from "../middlewares/verifyToken.js";
 export const commonRouter = exp.Router();
 
 //login
@@ -30,6 +31,19 @@ commonRouter.get("/logout", (req, res) => {
   });
 
   res.status(200).json({ message: "Logged out successfully" });
+});
+
+//Check auth (restore session)
+commonRouter.get("/check-auth", verifyToken([]), async (req, res) => {
+  try {
+    const user = await UserTypeModel.findById(req.user.userId).select("-password");
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+    res.status(200).json({ message: "Authenticated", payload: user });
+  } catch (err) {
+    res.status(401).json({ message: "Authentication failed" });
+  }
 });
 
 //Change password(Protected route)

@@ -28,7 +28,7 @@ adminRoute.post("/authenticate", async (req, res, next) => {
 
 
 //read articles(private)
-adminRoute.get( "/articles/author/:authorId",verifyToken,checkAdmin,async (req, res) => {
+adminRoute.get( "/articles/author/:authorId",verifyToken(["ADMIN"]),checkAdmin,async (req, res) => {
     try {
       const authorId = req.params.authorId;
 
@@ -45,7 +45,7 @@ adminRoute.get( "/articles/author/:authorId",verifyToken,checkAdmin,async (req, 
 //block or unblock
 // block user or author (admin only)
 adminRoute.put(
-  "/users/block/:userId",verifyToken,checkAdmin,async (req, res) => {
+  "/users/block/:userId",verifyToken(["ADMIN"]),checkAdmin,async (req, res) => {
     try {
       const userId = req.params.userId;
 
@@ -63,7 +63,7 @@ adminRoute.put(
 );
 // unblock user or author (admin only)
 adminRoute.put(
-  "/users/unblock/:userId",verifyToken,checkAdmin,async (req, res) => {
+  "/users/unblock/:userId",verifyToken(["ADMIN"]),checkAdmin,async (req, res) => {
     try {
       const userId = req.params.userId;
       const unblockedUser = await UserTypeModel.findByIdAndUpdate(

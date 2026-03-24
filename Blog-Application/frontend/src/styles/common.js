@@ -57,3 +57,37 @@ export const emptyStateClass    = "text-center text-[#a1a1a6] py-16 text-sm"
 
 // ─── Divider ──────────────────────────────────────────
 export const divider            = "border-t border-[#e8e8ed] my-10"
+
+
+// ─── Article Page ─────────────────────────────────────
+export const articlePageWrapper = "max-w-3xl mx-auto px-6 py-16"
+
+export const articleHeader = "mb-10 flex flex-col gap-4"
+
+export const articleCategory =
+  "text-[0.7rem] font-semibold uppercase tracking-widest text-[#0066cc]"
+
+export const articleMainTitle =
+  "text-4xl font-bold text-[#1d1d1f] tracking-tight leading-tight"
+
+export const articleAuthorRow =
+  "flex items-center justify-between text-sm text-[#6e6e73]"
+
+export const authorInfo =
+  "flex items-center gap-2 font-medium text-[#1d1d1f]"
+
+export const articleContent =
+  "text-[#1d1d1f] leading-[1.9] text-[1rem] whitespace-pre-line"
+
+export const articleFooter =
+  "mt-16 pt-6 border-t border-[#e8e8ed] text-xs text-[#a1a1a6]"
+
+// ─── Article Actions ──────────────────────────────────
+export const articleActions =
+  "flex items-center gap-3 mt-10"
+
+export const editBtn =
+  "bg-[#0066cc] text-white text-sm px-4 py-2 rounded-full hover:bg-[#004499] transition"
+
+export const deleteBtn =
+  "bg-[#ff3b30] text-white text-sm px-4 py-2 rounded-full hover:bg-[#cc2f26] transition"
