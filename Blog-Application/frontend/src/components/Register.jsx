@@ -13,7 +13,7 @@ import {
   loadingClass,
 } from "../styles/common";
 import { NavLink } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
@@ -21,17 +21,29 @@ function Register() {
   const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [preview, setPreview] = useState(null);
   const navigate = useNavigate();
   //const []=useState()
 
   const onUserRegister = async (newUser) => {
     setLoading(true);
     try {
-      let { role, ...userObj } = newUser;
+      // Create form data object
+      const formData = new FormData();
+      //get user object
+      let { role, profilePic, ...userObj } = newUser;
+      //add all fields except profilePic to FormData object
+      Object.keys(userObj).forEach((key) => {
+        formData.append(key, userObj[key]);
+      });
+      // add profilePic to Formdata object
+      if (profilePic && profilePic[0]) {
+        formData.append("profilePic", profilePic[0]);
+      }
 
       if (role === "user") {
         //make API req to user-api
-        let resObj = await axios.post("http://localhost:4000/user-api/users", userObj);
+        let resObj = await axios.post("http://localhost:4000/user-api/users", formData);
         if (resObj.status === 201) {
           //navigate to login
           navigate("/login");
@@ -39,8 +51,7 @@ function Register() {
       }
       if (role === "author") {
         //make API req to author-api
-        //make API req to user-api
-        let resObj = await axios.post("http://localhost:4000/author-api/users", userObj);
+        let resObj = await axios.post("http://localhost:4000/author-api/users", formData);
         console.log("res obj is ", resObj);
         if (resObj.status === 201) {
           //navigate to login
@@ -54,6 +65,13 @@ function Register() {
       setLoading(false);
     }
   };
+  useEffect(() => {
+        return () => {
+            if (preview) {
+                URL.revokeObjectURL(preview);
+            }
+        };
+        }, [preview]);
 
   //loading
   if (loading === true) {
@@ -121,15 +139,46 @@ function Register() {
             <input type="password" {...register("password")} placeholder="Min. 8 characters" className={inputClass} />
           </div>
 
-          {/* Profile Image URL */}
+        {/* Profile Image */}
           <div className={formGroup}>
-            <label className={labelClass}>Profile Image URL</label>
+            <label className={labelClass}>Profile Image</label>
             <input
-              type="text"
-              {...register("profileImageUrl")}
-              placeholder="https://example.com/avatar.png"
-              className={inputClass}
-            />
+        type="file"
+        accept="image/png, image/jpeg"
+        {...register("profilePic")}
+        onChange={(e) => {
+            // call react-hook-form's onChange first
+            register("profilePic").onChange(e);
+
+            //get image file
+            const file = e.target.files[0];
+            // validation for image format
+            if (file) {
+                if (!["image/jpeg", "image/png"].includes(file.type)) {
+                setError("Only JPG or PNG allowed");
+                return;
+                }
+                //validation for file size
+                if (file.size > 2 * 1024 * 1024) {
+                setError("File size must be less than 2MB");
+                return;
+                }
+                //Converts file → temporary browser URL(create preview URL)
+                const previewUrl = URL.createObjectURL(file);
+                setPreview(previewUrl);
+                setError(null);
+            }
+
+        }} />
+            {preview && (
+                <div className="mt-3 flex justify-center">
+                <img
+                    src={preview}
+                    alt="Preview"
+                    className="w-24 h-24 object-cover rounded-full border"
+                />
+                </div>
+            )}
           </div>
 
           {/* Submit */}

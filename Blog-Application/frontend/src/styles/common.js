@@ -36,8 +36,8 @@ export const navbarClass        = "bg-white/85 backdrop-blur-xl backdrop-saturat
 export const navContainerClass  = "max-w-5xl mx-auto w-full flex items-center justify-between"
 export const navBrandClass      = "text-base font-semibold text-[#1d1d1f] tracking-tight"
 export const navLinksClass      = "flex items-center gap-7"
-export const navLinkClass       = "text-[0.8rem] text-[#6e6e73] hover:text-[#1d1d1f] transition-colors font-normal"
-export const navLinkActiveClass = "text-[0.8rem] text-[#0066cc] font-medium"
+export const navLinkClass       = "text-xl text-[#6e6e73] hover:text-[#1d1d1f] transition-colors font-normal"
+export const navLinkActiveClass = "text-xl text-[#0066cc] font-medium"
 
 // ─── Article / Blog ───────────────────────────────────
 export const articleGrid        = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20px bg-[#e8e8ed] border border-[#e8e8ed] rounded-2xl overflow-hidden"

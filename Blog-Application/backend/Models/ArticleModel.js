@@ -11,7 +11,12 @@ const userCommentSchema = new Schema({
   comment: {
     type: String,
   },
-});
+  rating: {
+    type: Number,
+    min: 1,
+    max: 5,
+  },
+}, { timestamps: true });
 
 //create article schema
 const articleSchema = new Schema(

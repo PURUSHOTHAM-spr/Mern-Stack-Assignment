@@ -3,37 +3,44 @@ import { authenticate } from "../services/authService.js";
 import { UserTypeModel } from "../Models/UserModel.js";
 import bcrypt from "bcrypt";
 import { verifyToken } from "../middlewares/verifyToken.js";
+import upload from "../config/multer.js";
+import { uploadToCloudinary } from "../config/cloudinaryUpload.js";
+import cloudinary from "../config/cloudinary.js";
 export const commonRouter = exp.Router();
 
 //login
-commonRouter.post("/login", async (req, res) => {
-  //get user cred object
-  let userCred = req.body;
-  //call authenticate service
-  let { token, user } = await authenticate(userCred);
-  //save tokan as httpOnly cookie
-  res.cookie("token", token, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: false,
-  });
-  //send res
-  res.status(200).json({ message: "login success", payload: user });
+commonRouter.post("/login", async (req, res, next) => {
+  try {
+    //get user cred object
+    let userCred = req.body;
+    //call authenticate service
+    let { token, user } = await authenticate(userCred);
+    //save tokan as httpOnly cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false,
+    });
+    //send res
+    res.status(200).json({ message: "login success", payload: user });
+  } catch (err) {
+    next(err);
+  }
 });
 
 //logout for User, Author and Admin
 commonRouter.get("/logout", (req, res) => {
   // Clear the cookie named 'token'
   res.clearCookie("token", {
-    httpOnly: true, // Must match original  settings
-    secure: false, // Must match original  settings
-    sameSite: "lax", // Must match original  settings
+    httpOnly: true, 
+    secure: false, 
+    sameSite: "lax", 
   });
 
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-//Check auth (restore session)
+//Check auth (restore session)refresh
 commonRouter.get("/check-auth", verifyToken([]), async (req, res) => {
   try {
     const user = await UserTypeModel.findById(req.user.userId).select("-password");
@@ -71,4 +78,39 @@ commonRouter.put("/change-password", async (req, res) => {
   await account.save();
 
   res.status(200).json({ message: "Password changed successfully" });
+});
+
+// Update profile(Protected route)
+commonRouter.put("/profile", verifyToken([]), upload.single("profilePic"), async (req, res, next) => {
+  let cloudinaryResult;
+  try {
+    const userId = req.user.userId;
+    const { firstName, lastName } = req.body;
+
+    const user = await UserTypeModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (req.file) {
+      cloudinaryResult = await uploadToCloudinary(req.file.buffer);
+      // We could optionally delete the old image from cloudinary here if user.profileImageUrl exists
+      user.profileImageUrl = cloudinaryResult.secure_url;
+    }
+
+    if (firstName) user.firstName = firstName;
+    if (lastName !== undefined) user.lastName = lastName; // allow clearing last name if desired
+
+    await user.save();
+
+    const updatedUser = user.toObject();
+    delete updatedUser.password;
+
+    res.status(200).json({ message: "Profile updated successfully", payload: updatedUser });
+  } catch (err) {
+    if (cloudinaryResult?.public_id) {
+      await cloudinary.uploader.destroy(cloudinaryResult.public_id);
+    }
+    next(err);
+  }
 });

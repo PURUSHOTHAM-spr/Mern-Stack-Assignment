@@ -21,6 +21,10 @@ const userSchema = new Schema(
     profileImageUrl: {
       type: String,
     },
+    followers: [{
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    }],
     role: {
       type: String,
       enum: ["AUTHOR", "USER", "ADMIN"],

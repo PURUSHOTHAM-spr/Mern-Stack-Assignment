@@ -1,20 +1,56 @@
 import exp from "express";
 import { register } from "../services/authService.js";
 import { ArticleModel } from "../Models/ArticleModel.js";
+import { UserTypeModel } from "../Models/UserModel.js";
 //import { checkAuthor } from "../middlewares/checkAuthor.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
+import upload from "../config/multer.js";
+import { uploadToCloudinary } from "../config/cloudinaryUpload.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const authorRoute = exp.Router();
 
 //Register author(public)
-authorRoute.post("/users", async (req, res) => {
-  //get user obj from req
-  let userObj = req.body;
-  //call register
-  const newUserObj = await register({ ...userObj, role: "AUTHOR" });
-  //send res
-  res.status(201).json({ message: "author created", payload: newUserObj });
-});
+authorRoute.post(
+  "/users",
+  upload.single("profilePic"),
+  async (req, res, next) => {
+    let cloudinaryResult;
+
+    try {
+      let userObj = req.body;
+      // Remove profilePic from body (handled by multer as file, not a schema field)
+      delete userObj.profilePic;
+
+      //  Step 1: upload image to cloudinary from memoryStorage (if exists)
+      if (req.file) {
+        cloudinaryResult = await uploadToCloudinary(req.file.buffer);
+      }
+
+      // Step 2: call existing register()
+      const newUserObj = await register({
+        ...userObj,
+        role: "AUTHOR",
+        profileImageUrl: cloudinaryResult?.secure_url,
+      });
+
+      res.status(201).json({
+        message: "author created",
+        payload: newUserObj,
+      });
+
+    } catch (err) {
+
+      // Step 3: rollback
+      if (cloudinaryResult?.public_id) {
+        await cloudinary.uploader.destroy(cloudinaryResult.public_id);
+      }
+
+      next(err);
+    }
+
+  }
+);
 
 //Create article(protected route)
 authorRoute.post("/articles", verifyToken(["AUTHOR"]), async (req, res) => {
@@ -97,4 +133,52 @@ authorRoute.patch("/articles/:id/status", verifyToken(["AUTHOR"]), async (req, r
     message: `Article ${isArticleActive ? "restored" : "deleted"} successfully`,
     article,
   });
+});
+
+// Get Author Stats (protected route)
+authorRoute.get("/stats", verifyToken(["AUTHOR"]), async (req, res) => {
+  try {
+    const authorId = req.user.userId;
+
+    // 1. Get followers count
+    const author = await UserTypeModel.findById(authorId);
+    if (!author) {
+      return res.status(404).json({ message: "Author not found" });
+    }
+    const followersCount = author.followers ? author.followers.length : 0;
+
+    // 2. Get posts count (active articles)
+    const postsCount = await ArticleModel.countDocuments({ author: authorId, isArticleActive: true });
+
+    // 3. Calculate average rating
+    const articles = await ArticleModel.find({ author: authorId, isArticleActive: true });
+    
+    let totalRatings = 0;
+    let ratingCount = 0;
+
+    articles.forEach(article => {
+      if (article.comments && article.comments.length > 0) {
+        article.comments.forEach(comment => {
+          if (comment.rating && typeof comment.rating === 'number') {
+            totalRatings += comment.rating;
+            ratingCount += 1;
+          }
+        });
+      }
+    });
+
+    const averageRating = ratingCount > 0 ? (totalRatings / ratingCount).toFixed(1) : 0;
+
+    res.status(200).json({
+      message: "Stats retrieved successfully",
+      payload: {
+        followers: followersCount,
+        posts: postsCount,
+        rating: Number(averageRating)
+      }
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });

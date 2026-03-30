@@ -5,10 +5,13 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import UserProfile from "./components/UserProfile";
 import AuthorProfile from "./components/AuthorProfile";
-import ArticleByID from "./components/ArticleByID";
+import ArticleByID from "./components/ArticleById";
 import AuthorArticles from "./components/AuthorArticles";
 import WriteArticle from "./components/WriteArticle";
 import EditArticle from "./components/EditArticleForm";
+import Earnings from "./components/Earnings";
+import Stats from "./components/Stats";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -31,11 +34,19 @@ function App() {
         },
         {
           path: "user-profile",
-          element: <UserProfile />,
+          element: (
+            <ProtectedRoute allowedRoles={["USER"]}>
+              <UserProfile />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "author-profile",
-          element: <AuthorProfile />,
+          element: (
+            <ProtectedRoute allowedRoles={["AUTHOR"]}>
+              <AuthorProfile />
+            </ProtectedRoute>
+          ),
           children: [
             {
               index: true,
@@ -49,6 +60,14 @@ function App() {
               path: "write-article",
               element: <WriteArticle />,
             },
+            {
+              path: "earnings",
+              element: <Earnings />,
+            },
+            {
+              path: "stats",
+              element: <Stats />,
+            },
           ],
         },
         {
@@ -57,7 +76,11 @@ function App() {
         },
         {
           path: "edit-article",
-          element: <EditArticle />,
+          element: (
+            <ProtectedRoute allowedRoles={["AUTHOR"]}>
+              <EditArticle />
+            </ProtectedRoute>
+          ),
         },
       ],
     },

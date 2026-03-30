@@ -72,7 +72,19 @@ function Header() {
           {/* Logged in */}
           {isAuthenticated && (
             <>
-              <li>
+              <li className="flex items-center gap-2">
+                {/* Profile Image */}
+                {user?.profileImageUrl ? (
+                  <img
+                    src={user.profileImageUrl}
+                    alt="Profile"
+                    className="w-10 h-10 rounded-full object-cover border-2 border-white"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center text-white text-sm font-bold">
+                    {user?.firstName?.charAt(0)?.toUpperCase() || "U"}
+                  </div>
+                )}
                 <NavLink
                   to={getProfilePath()}
                   className={({ isActive }) => (isActive ? navLinkActiveClass : navLinkClass)}

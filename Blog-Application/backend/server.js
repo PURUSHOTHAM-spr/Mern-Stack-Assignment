@@ -7,6 +7,7 @@ import { adminRoute } from "./APIs/AdminApi.js";
 import { authorRoute } from "./APIs/AuthorApi.js";
 import { commonRouter } from "./APIs/CommonApi.js";
 import cors from "cors";
+import multer from "multer";
 
 config(); //process.env
 
@@ -47,6 +48,14 @@ app.use((err, req, res, next) => {
 
   console.log("Error:", err);
 
+  // multer error (file too large, wrong type, etc.)
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({
+      message: "File upload error",
+      error: err.message
+    });
+  }
+
   // mongoose validation error
   if (err.name === "ValidationError") {
     return res.status(400).json({
@@ -83,8 +92,8 @@ app.use((err, req, res, next) => {
   }
 
   // default error
-  res.status(500).json({
-    message: "Server error",
+  res.status(err.status || 500).json({
+    message: err.message || "Server error",
     error: err.message
   });
 
