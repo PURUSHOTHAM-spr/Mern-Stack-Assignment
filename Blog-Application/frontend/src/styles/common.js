@@ -40,10 +40,10 @@ export const navLinkClass       = "text-xl text-[#6e6e73] hover:text-[#1d1d1f] t
 export const navLinkActiveClass = "text-xl text-[#0066cc] font-medium"
 
 // ─── Article / Blog ───────────────────────────────────
-export const articleGrid        = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20px bg-[#e8e8ed] border border-[#e8e8ed] rounded-2xl overflow-hidden"
-export const articleCardClass   = "bg-[#f5f5f7] p-7 hover:bg-[#ebebf0] transition-colors duration-200 flex flex-col gap-2.5 cursor-pointer"
-export const articleTitle       = "text-base font-semibold text-[#1d1d1f] leading-snug tracking-tight"
-export const articleExcerpt     = "text-sm text-[#6e6e73] leading-relaxed"
+export const articleGrid        = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 bg-[#e8e8ed] border border-[#e8e8ed] rounded-2xl overflow-hidden"
+export const articleCardClass   = "bg-[#f5f5f7] p-7 hover:bg-[#ebebf0] transition-colors duration-200 flex flex-col gap-2.5 cursor-pointer overflow-hidden min-w-0"
+export const articleTitle       = "text-base font-semibold text-[#1d1d1f] leading-snug tracking-tight break-words overflow-hidden"
+export const articleExcerpt     = "text-sm text-[#6e6e73] leading-relaxed break-words"
 export const articleMeta        = "text-xs text-[#a1a1a6]"
 export const articleBody        = "text-[#6e6e73] leading-[1.85] text-[0.95rem] max-w-2xl"
 export const timestampClass     = "text-xs text-[#a1a1a6] flex items-center gap-1.5"
@@ -68,7 +68,7 @@ export const articleCategory =
   "text-[0.7rem] font-semibold uppercase tracking-widest text-[#0066cc]"
 
 export const articleMainTitle =
-  "text-4xl font-bold text-[#1d1d1f] tracking-tight leading-tight"
+  "text-4xl font-bold text-[#1d1d1f] tracking-tight leading-tight break-words"
 
 export const articleAuthorRow =
   "flex items-center justify-between text-sm text-[#6e6e73]"
@@ -77,7 +77,7 @@ export const authorInfo =
   "flex items-center gap-2 font-medium text-[#1d1d1f]"
 
 export const articleContent =
-  "text-[#1d1d1f] leading-[1.9] text-[1rem] whitespace-pre-line"
+  "text-[#1d1d1f] leading-[1.9] text-[1rem] whitespace-pre-line break-words"
 
 export const articleFooter =
   "mt-16 pt-6 border-t border-[#e8e8ed] text-xs text-[#a1a1a6]"

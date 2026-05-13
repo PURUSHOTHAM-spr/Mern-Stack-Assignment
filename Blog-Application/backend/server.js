@@ -72,10 +72,11 @@ app.use((err, req, res, next) => {
     });
   }
 
-  // duplicate key
-  if (err.code === 11000) {
-    const field = Object.keys(err.keyValue)[0];
-    const value = err.keyValue[field];
+  // duplicate key (check both direct and Mongoose-wrapped errors)
+  const dupErr = err.code === 11000 ? err : (err.cause?.code === 11000 ? err.cause : null);
+  if (dupErr) {
+    const field = Object.keys(dupErr.keyValue)[0];
+    const value = dupErr.keyValue[field];
 
     return res.status(409).json({
       message: "Duplicate value",

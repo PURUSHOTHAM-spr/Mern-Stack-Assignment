@@ -125,25 +125,25 @@ function UserProfile() {
 
             return (
               <div className={articleCardClass} key={articleObj._id}>
-                <div className="flex flex-col p-6 h-full bg-white rounded-lg shadow border border-gray-100 hover:shadow-lg transition-all">
+                <div className="flex flex-col p-6 h-full bg-white rounded-lg shadow border border-gray-100 hover:shadow-lg transition-all overflow-hidden min-w-0">
                   
                   {/* Author Header */}
                   {articleObj.author && (
                     <div className="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 min-w-0 flex-1">
                         <img 
                           src={articleObj.author.profileImageUrl || "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"} 
                           alt="Author" 
-                          className="w-8 h-8 rounded-full object-cover"
+                          className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                         />
-                        <span className="font-semibold text-gray-800 text-sm">
+                        <span className="font-semibold text-gray-800 text-sm truncate">
                           {articleObj.author.firstName} {articleObj.author.lastName || ''}
                         </span>
                       </div>
                       {!isOwnPost && (
                         <button 
                           onClick={(e) => handleFollowToggle(e, articleObj)}
-                          className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors ${
+                          className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors flex-shrink-0 ${
                             isFollowing ? 'bg-gray-100 text-gray-700 hover:bg-gray-200' : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
                           }`}
                         >
@@ -154,9 +154,9 @@ function UserProfile() {
                   )}
 
                   {/* Top Content */}
-                  <div className="flex-1">
-                    <p className={articleTitle}>{articleObj.title}</p>
-                    <p className="text-gray-600 text-sm mb-3">{articleObj.content.slice(0, 80)}...</p>
+                  <div className="flex-1 min-w-0">
+                    <p className={`${articleTitle} line-clamp-2`}>{articleObj.title}</p>
+                    <p className="text-gray-600 text-sm mb-3 break-words">{articleObj.content.slice(0, 80)}...</p>
                     <p className={timestampClass}>{formatDateIST(articleObj.createdAt)}</p>
                   </div>
 

@@ -10,7 +10,6 @@ import {
   errorClass,
   mutedText,
   divider,
-  loadingClass,
 } from "../styles/common";
 import { NavLink } from "react-router";
 import { useState, useEffect } from "react";
@@ -18,15 +17,19 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 function Register() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [preview, setPreview] = useState(null);
   const navigate = useNavigate();
-  //const []=useState()
 
   const onUserRegister = async (newUser) => {
     setLoading(true);
+    setError(null);
     try {
       // Create form data object
       const formData = new FormData();
@@ -41,42 +44,37 @@ function Register() {
         formData.append("profilePic", profilePic[0]);
       }
 
+      let resObj;
       if (role === "user") {
         //make API req to user-api
-        let resObj = await axios.post("http://localhost:4000/user-api/users", formData);
-        if (resObj.status === 201) {
-          //navigate to login
-          navigate("/login");
-        }
-      }
-      if (role === "author") {
+        resObj = await axios.post("http://localhost:4000/user-api/users", formData);
+      } else if (role === "author") {
         //make API req to author-api
-        let resObj = await axios.post("http://localhost:4000/author-api/users", formData);
-        console.log("res obj is ", resObj);
-        if (resObj.status === 201) {
-          //navigate to login
-          navigate("/login");
-        }
+        resObj = await axios.post("http://localhost:4000/author-api/users", formData);
+      }
+
+      if (resObj && resObj.status === 201) {
+        //navigate to login
+        navigate("/login");
       }
     } catch (err) {
-     // console.log("err is ", err);
-      setError(err.response?.data?.error || "Registration failed");
+      setError(
+        err.response?.data?.error ||
+        err.response?.data?.message ||
+        "Registration failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }
   };
-  useEffect(() => {
-        return () => {
-            if (preview) {
-                URL.revokeObjectURL(preview);
-            }
-        };
-        }, [preview]);
 
-  //loading
-  if (loading === true) {
-    return <p className={loadingClass}></p>;
-  }
+  useEffect(() => {
+    return () => {
+      if (preview) {
+        URL.revokeObjectURL(preview);
+      }
+    };
+  }, [preview]);
 
   return (
     <div className={`${pageBackground} flex items-center justify-center py-16 px-4`}>
@@ -93,7 +91,7 @@ function Register() {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
-                  {...register("role")}
+                  {...register("role", { required: "Please select a role" })}
                   id="user"
                   value="user"
                   className="accent-violet-600 w-4 h-4"
@@ -103,7 +101,7 @@ function Register() {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
-                  {...register("role")}
+                  {...register("role", { required: "Please select a role" })}
                   id="author"
                   value="author"
                   className="accent-violet-600 w-4 h-4"
@@ -111,6 +109,9 @@ function Register() {
                 <span className="text-sm text-stone-700 font-medium">Author</span>
               </label>
             </div>
+            {errors.role && (
+              <p className="text-red-500 text-xs mt-1">{errors.role.message}</p>
+            )}
           </div>
 
           <div className={divider} />
@@ -119,7 +120,15 @@ function Register() {
           <div className="sm:flex gap-4 mb-4">
             <div className="flex-1">
               <label className={labelClass}>First Name</label>
-              <input type="text" {...register("firstName")} placeholder="First name" className={inputClass} />
+              <input
+                type="text"
+                {...register("firstName", { required: "First name is required" })}
+                placeholder="First name"
+                className={inputClass}
+              />
+              {errors.firstName && (
+                <p className="text-red-500 text-xs mt-1">{errors.firstName.message}</p>
+              )}
             </div>
             <div className="flex-1">
               <label className={labelClass}>Last Name</label>
@@ -130,60 +139,93 @@ function Register() {
           {/* Email */}
           <div className={formGroup}>
             <label className={labelClass}>Email</label>
-            <input type="email" {...register("email")} placeholder="you@example.com" className={inputClass} />
+            <input
+              type="email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Enter a valid email address",
+                },
+              })}
+              placeholder="you@example.com"
+              className={inputClass}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+            )}
           </div>
 
           {/* Password */}
           <div className={formGroup}>
             <label className={labelClass}>Password</label>
-            <input type="password" {...register("password")} placeholder="Min. 8 characters" className={inputClass} />
+            <input
+              type="password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
+              placeholder="Min. 6 characters"
+              className={inputClass}
+            />
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+            )}
           </div>
 
-        {/* Profile Image */}
+          {/* Profile Image */}
           <div className={formGroup}>
             <label className={labelClass}>Profile Image</label>
             <input
-        type="file"
-        accept="image/png, image/jpeg"
-        {...register("profilePic")}
-        onChange={(e) => {
-            // call react-hook-form's onChange first
-            register("profilePic").onChange(e);
+              type="file"
+              accept="image/png, image/jpeg"
+              {...register("profilePic")}
+              onChange={(e) => {
+                // call react-hook-form's onChange first
+                register("profilePic").onChange(e);
 
-            //get image file
-            const file = e.target.files[0];
-            // validation for image format
-            if (file) {
-                if (!["image/jpeg", "image/png"].includes(file.type)) {
-                setError("Only JPG or PNG allowed");
-                return;
+                //get image file
+                const file = e.target.files[0];
+                // validation for image format
+                if (file) {
+                  if (!["image/jpeg", "image/png"].includes(file.type)) {
+                    setError("Only JPG or PNG allowed");
+                    return;
+                  }
+                  //validation for file size
+                  if (file.size > 2 * 1024 * 1024) {
+                    setError("File size must be less than 2MB");
+                    return;
+                  }
+                  //Converts file → temporary browser URL(create preview URL)
+                  const previewUrl = URL.createObjectURL(file);
+                  setPreview(previewUrl);
+                  setError(null);
                 }
-                //validation for file size
-                if (file.size > 2 * 1024 * 1024) {
-                setError("File size must be less than 2MB");
-                return;
-                }
-                //Converts file → temporary browser URL(create preview URL)
-                const previewUrl = URL.createObjectURL(file);
-                setPreview(previewUrl);
-                setError(null);
-            }
-
-        }} />
+              }}
+            />
             {preview && (
-                <div className="mt-3 flex justify-center">
+              <div className="mt-3 flex justify-center">
                 <img
-                    src={preview}
-                    alt="Preview"
-                    className="w-24 h-24 object-cover rounded-full border"
+                  src={preview}
+                  alt="Preview"
+                  className="w-24 h-24 object-cover rounded-full border"
                 />
-                </div>
+              </div>
             )}
           </div>
 
           {/* Submit */}
-          <button type="submit" className={submitBtn}>
-            Create Account
+          <button
+            type="submit"
+            className={submitBtn}
+            disabled={loading}
+            style={loading ? { opacity: 0.6, cursor: "not-allowed" } : {}}
+          >
+            {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
 
@@ -200,7 +242,3 @@ function Register() {
 }
 
 export default Register;
-
-
-//res.data
-//err.response.
